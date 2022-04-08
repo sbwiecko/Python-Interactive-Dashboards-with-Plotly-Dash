@@ -1,12 +1,11 @@
 import pandas as pd
 
-import dash
-from dash import html, dcc
-from dash.dependencies import Input, Output, State
+# new import statements in newer versions of Dash!
+from dash import Dash, callback, html, dcc, Input, Output, State
 import plotly.express as px
 
 # app built on the previous script
-app = dash.Dash()
+app = Dash()
 
 
 # load the dataset
@@ -19,8 +18,6 @@ data_options = {
     'happiness_rank' : "Happiness Rank",
 }
 
-
-app = dash.Dash()
 
 app.layout = html.Div(
     [
@@ -66,7 +63,8 @@ app.layout = html.Div(
 
 # chaining the change in the top RadioItems will be chained to the DropDown menu
 
-@app.callback(
+# @app.callback( # in newer versions of Dash can import callback directly from dash
+@callback(
     Output('country-dropdown', 'options'),
     Output('country-dropdown', 'value'),
     Input('region-radio', 'value'),
@@ -83,7 +81,8 @@ def update_dropdown(selected_region):
 # -gets passed into the callback function
 # -but compared to Input, doesn't trigger the callback function
 
-@app.callback(
+# @app.callback(
+@callback(
     Output('happiness-graph', 'figure'),
     Output('average-div', 'children'),
     Input('submit-button-state', 'n_clicks'), # each click update n_clicks which triggers callback
